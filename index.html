@@ -4240,9 +4240,18 @@ saveSchools();
 
       memberLine.innerHTML = `
 
+<div class="member-left">
+
+      <img
+                class="member-pfp"
+                src="${member.picture || 'https://static.vecteezy.com/system/resources/previews/055/581/121/non_2x/default-profile-picture-icon-avatar-photo-placeholder-illustration-vector.jpg'}"
+            >
+
         <span>
           ${memberName}
         </span>
+        
+</div>
 
         <button class="info-btn" onclick="openMember(${member.id})">
           Info
@@ -4258,7 +4267,6 @@ saveSchools();
       closeMemberPopup();
 
     }
-
 /* =========================
    GLOBAL STATE
 ========================= */
