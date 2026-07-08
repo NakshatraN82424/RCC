@@ -4709,12 +4709,32 @@ function postAnnouncement() {
 
   if (!text) return;
 
-  if (editingAnnouncementId !== null) {
-    const ann = currentSchool.announcements.find(a => a.id === editingAnnouncementId);
+  if(editingAnnouncementId){
+
+    const ann =
+        currentSchool.announcements.find(
+            a => a.id === editingAnnouncementId
+        );
+
+    if(ann.locked){
+
+        alert("This announcement is locked.");
+
+        editingAnnouncementId = null;
+
+        document.getElementById("announcementInput").value = "";
+
+        return;
+
+    }
+
     ann.text = text;
+
     ann.time = getTimestamp();
+
     editingAnnouncementId = null;
-  } else {
+
+} else {
     currentSchool.announcements.push({
 
     id: Date.now(),
@@ -4833,28 +4853,49 @@ function renderAnnouncements() {
 
         <div class="ann-actions">
 
-            <button class="edit-btn"
-            onclick="editAnnouncement(${ann.id})">
+${
+!ann.locked
+?
+`
+    <button
+        class="edit-btn"
+        onclick="editAnnouncement(${ann.id})">
+        Edit
+    </button>
 
-                Edit
+    <button
+        class="delete-btn"
+        onclick="deleteAnnouncement(${ann.id})">
+        Delete
+    </button>
 
-            </button>
+    <button
+        class="pin-btn"
+        onclick="togglePin(${ann.id})">
+        ${ann.pinned ? "Unpin" : "Pin"}
+    </button>
 
-            <button class="delete-btn"
-            onclick="deleteAnnouncement(${ann.id})">
+    <button
+        class="lock-btn"
+        onclick="toggleLock(${ann.id})">
+        🔒 Lock
+    </button>
+`
+:
+`
+    <span class="locked-label">
+        🔒 Locked
+    </span>
 
-                Delete
+    <button
+        class="delete-btn"
+        onclick="deleteAnnouncement(${ann.id})">
+        Delete
+    </button>
+`
+}
 
-            </button>
-
-            <button class="pin-btn"
-            onclick="togglePin(${ann.id})">
-
-                ${ann.pinned ? "Unpin" : "Pin"}
-
-            </button>
-
-        </div>
+</div>
 
     </div>
 
