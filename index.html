@@ -4990,6 +4990,14 @@ console.log(
 
     function submitHours(){
 
+      function getdateTimestamp() {
+
+    const now = new Date();
+
+    return now.toLocaleDateString();
+
+}
+
       const activity =
         document.getElementById("activityInput").value;
 
@@ -5023,10 +5031,9 @@ currentMember.totalHours += hours;
 
     hours: hours,
 
-    date: getTimestamp()
+    date: getdateTimestamp()
 
     });
-
     currentMember.totalHours += hours;
 
       }
